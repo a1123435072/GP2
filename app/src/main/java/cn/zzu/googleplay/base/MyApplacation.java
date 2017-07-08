@@ -7,7 +7,7 @@ import android.os.Process;
 
 /**
  * Created by yangg on 2017/7/8.
- *
+ * <p>
  * 描述:易错点:需要在清单文件里面进行配置****************需要在清单文件中配置
  * static内存共享的东西
  */
@@ -18,9 +18,13 @@ public class MyApplacation extends Application {
     private static Handler mainThreadHandler;
     private static Context context;//static变量,是不会被阿继回收器所管理的
 
+    public static Context getmContext() {
+        return context;
+    }
 
     /**
      * 得到主线城里面查un就爱你的线程id
+     *
      * @return
      */
     public static int getMainThreadId() {
@@ -29,6 +33,7 @@ public class MyApplacation extends Application {
 
     /**
      * 得到主线程的Handler
+     *
      * @return
      */
     public static Handler getMainThreadHandler() {
@@ -39,15 +44,19 @@ public class MyApplacation extends Application {
         return context;
     }
 
+    public static int getmMainThread() {
+        return mainThreadId;
+    }
+
     /**
      * 程序一旦启动的时候,就运行
      * 创建一些常用的方法
      * 进行程序的初始化
-     *  图片的三级缓存.程序的初始化
-     *  耗时的操作,最好不放
-     *
-     *  执行几次?默认执行1次,
-     *  如果你把application 配置成
+     * 图片的三级缓存.程序的初始化
+     * 耗时的操作,最好不放
+     * <p>
+     * 执行几次?默认执行1次,
+     * 如果你把application 配置成
      */
     @Override
     public void onCreate() {//程序的入口方法

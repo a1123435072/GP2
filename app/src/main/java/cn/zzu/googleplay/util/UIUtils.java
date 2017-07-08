@@ -3,40 +3,47 @@ package cn.zzu.googleplay.util;
 import android.content.Context;
 import android.content.res.Resources;
 
+import cn.zzu.googleplay.base.MyApplacation;
+
 /**
  * Created by yangg on 2017/7/8.
  */
 
 public class UIUtils {
-    private static String packageName;
-
     /**
      * 得到上下文
      */
     public static Context getContext(){
-        return getContext();
+        return MyApplacation.getmContext();
     }
-
     /**
-     * 得到资源李静
-     * @return
+     * 得到Restute对象
      */
-    public static Resources  getResources(){
+    public static Resources getResoutces(){
         return getContext().getResources();
     }
-
-    public static  String getString(int resId){
-        return getResources().getString(resId);
+    /**
+     * 得到string.xml中的字符串信息
+     */
+    public static String getString(int resId){
+        return  getResoutces().getString(resId);
     }
-    public static String[] getStrings(int resId){
-        return getResources().getStringArray(resId);
+    /**
+     * 得到String.xml中的字符串数组信息
+     */
+    public static String[] getStrings (int resId){
+        return getResoutces().getStringArray(resId);
     }
-
+    /**
+     * 得到Color.xml中的颜色信息
+     */
     public static int getColor(int resId){
-        return getResources().getColor(resId);
+        return getResoutces().getColor(resId);
     }
-
-    public static String getPackageName() {
+    /**
+     * 得到应用程序报名
+     */
+    public static String getPackageName(){
         return getContext().getPackageName();
     }
 }

@@ -1,150 +1,142 @@
 package cn.zzu.googleplay;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.Toast;
 
-import com.astuetz.PagerSlidingTabStrip;
+import com.astuetz.PagerSlidingTabStripExtends;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 import cn.zzu.googleplay.factory.FragmentFactory;
+import cn.zzu.googleplay.util.LogUtils;
 import cn.zzu.googleplay.util.UIUtils;
 
-/**
- * 主界面
- */
 public class MainActivity extends AppCompatActivity {
 
-    private DrawerLayout mDrawLayout;
+    @BindView(R.id.main_tabs)
+    PagerSlidingTabStripExtends mainTabs;
+    @BindView(R.id.main_viewpager)
+    ViewPager mainViewpager;
+
+
+    private DrawerLayout mDrawerLayotut;
     private ActionBarDrawerToggle toggle;
-    private ViewPager vp;
-    private PagerSlidingTabStrip mTabs;
-    private String mMainTitles;
+    private String[] mMainTitle;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
-        initActionBar();
-        initView();
-        intiactionBardrawToggle();
-
+        intiActionBar();
+        intiView();
+        intiActionBarDrewerToggle();
         initData();
+
     }
 
     private void initData() {
-        //为viewpager设置适配器
-        mMainTitles = UIUtils.getString(R.array.main_titles);
-        vp.setAdapter(new MainPagerAdapter(getSupportFragmentManager()));
-        mTabs.setViewPager(vp);
+        //模拟数据集
+        mMainTitle = UIUtils.getStrings(R.array.main_titles);
+        //为,viewPager设置适配器
+        MainFragmentPagerAdapter mainFragmentPagerAdapter = new MainFragmentPagerAdapter(getSupportFragmentManager());
+
+        mainViewpager.setAdapter(mainFragmentPagerAdapter);
+        mainTabs.setViewPager(mainViewpager);
 
     }
+
+    private void intiActionBarDrewerToggle() {
+        toggle = new ActionBarDrawerToggle(this, mDrawerLayotut, R.string.open, R.string.close);
+
+        //同步状态方法-->替换默认回退不放呢的ui效果
+        toggle.syncState();
+        //设置drawerLayout的监听-->DrawerLayout的拖动效果,toggle可以跟着该百年ui
+        mDrawerLayotut.setDrawerListener(toggle);
+    }
+
 
     /**
-     * pagerAdapter view
-     *
+     * 初始化  视图
      */
-    class MainPagerAdapter extends FragmentPagerAdapter{
+    private void intiView() {
 
-
-
-        public MainFragmentPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        public  class  MainFragmentPagerAdapter e()
-
-        //返回指定position页面的Fragment
-        @Override
-        public Fragment getItem(int position) {
-            Fragment fragment = FragmentFactory.createFragment(position);
-            return null;
-        }
-
-        /**
-         * 决定viewpaget也是的综合
-         * @return
-         */
-        @Override
-        public int getCount() {
-            if (mMainTitles!=null){
-                return mMainTitles.length();
-            }
-            return 0;
-        }
-
-        /**
-         * 必须复写这个方法,得到title
-         * 是什么
-         * @param position
-         * @return
-         */
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mMainTitles[position];
-        }
+        mDrawerLayotut = (DrawerLayout) findViewById(R.id.main_drewerLayout);
     }
 
-    private void intiactionBardrawToggle() {
-        toggle = new ActionBarDrawerToggle(this,mDrawLayout, R.string.open,R.string.close);
-        //同步状态方法-->途欢默认回退部分的ui效果
-        toggle.syncState();
-        //监听 设置 drawlayout的监听//拖动的时候上面也 会跟着变化
-        mDrawLayout.setDrawerListener(toggle);
-    }
+    private void intiActionBar() {
+        //得到actionBar 的事例
+        ActionBar supportActionBar = getSupportActionBar();
 
-    private void initView() {
-        mDrawLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
-        vp = (ViewPager) findViewById(R.id.main_vp);
-        mTabs = (PagerSlidingTabStrip) findViewById(R.id.main_tabs);
+        //设置标题
+        supportActionBar.setTitle("GooglePlay");
+        //supportActionBar.setSubtitle("副标题");
 
-
-
-    }
-
-    private void initActionBar() {
-        ActionBar supportActionBar = getSupportActionBar();//v4包中的action
-        /**
-         * 老师的方法
-         */
-        //supportActionBar.setCustomView();
-
-        supportActionBar.setTitle("主标题");
-        supportActionBar.setSubtitle("副标题");
-
+        //设置图标
         supportActionBar.setIcon(R.drawable.ic_launcher);
-        supportActionBar.setIcon(R.mipmap.ic_action_call);
-
+        supportActionBar.setLogo(R.mipmap.ic_action_call);
+        //显示logo/icon(图标) 默认是false,默认是隐藏图标
         supportActionBar.setDisplayShowHomeEnabled(true);
-
-        //修改icon和local的优先级
-        supportActionBar.setDisplayUseLogoEnabled(true);//默认是没用logo用的是icon
-
-        //显示绘图部分
+        //修改icon和logo显示的优先级,默认false 默认是没有logo,用的icon
+        supportActionBar.setDisplayUseLogoEnabled(true);
+        //显示回退部分//默认是false,默认隐藏了回退部分
         supportActionBar.setDisplayHomeAsUpEnabled(true);
-
 
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()){
-
+        switch (item.getItemId()) {
             case android.R.id.home:
-                //dianji toggle可以控制  打开和关闭
+                Toast.makeText(getApplicationContext(), "点击了回退部分", Toast.LENGTH_SHORT).show();
+                //点击togge可以控制drewerlayout的打开和关闭
                 toggle.onOptionsItemSelected(item);
+                break;
+            default:
+
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private class MainFragmentPagerAdapter extends FragmentPagerAdapter {
+        public MainFragmentPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        //自定Position所有的对应的页面的Fragment内容
+        @Override
+        public Fragment getItem(int position) {
+            LogUtils.s("初始化=>" + mMainTitle[position]);
+            String s = mMainTitle[position];
+            Fragment fragment = FragmentFactory.createFragment(position);
+            return fragment;
+        }
+
+        @Override
+        public int getCount() {
+            if (mMainTitle != null) {
+                return mMainTitle.length;
+            }
+            return 0;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+
+            return mMainTitle[position];
+        }
     }
 }

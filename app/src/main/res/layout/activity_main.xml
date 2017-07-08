@@ -1,43 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout android:id="@+id/main_drawer_layout"
+<android.support.v4.widget.DrawerLayout android:id="@+id/main_drewerLayout"
     xmlns:android="http://schemas.android.com/apk/res/android"
-
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:huaqing="http://schemas.android.com/apk/res/android">
+    tools:context="cn.zzu.googleplaytest.MainActivity"
+    xmlns:huaqing="http://schemas.android.com/apk/res-auto">
+
+    <!--左侧菜单区域-->
     <FrameLayout
-        android:layout_gravity="right"
         android:layout_width="180dp"
-        android:background="#f00"
-        android:layout_height="match_parent"></FrameLayout>
-    <FrameLayout
+        android:layout_height="match_parent"
         android:layout_gravity="left"
-        android:layout_width="180dp"
-        android:background="#f00"
-        android:layout_height="match_parent"></FrameLayout>
-<!--内容区域-->
-
-
+        android:background="#0f0"></FrameLayout>
+    <!--菜单区域(左侧菜单)-->
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.astuetz.PagerSlidingTabStrip
-            huaqing:pstsIndicatorColor="#f00"
+        <com.astuetz.PagerSlidingTabStripExtends
+            android:id="@+id/main_tabs"
+            huaqing:pstsIndicatorColor="@color/tab_indicator_selected"
+            huaqing:pstsSelectedTabTextColor="@color/tab_text_selected"
+            huaqing:pstsSelectedTabTextSize="16sp"
+            huaqing:pstsTabTextColor="@color/tab_text_normal"
+            huaqing:pstsTabTextSize="14sp"
+
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:id="@+id/main_tabs"></com.astuetz.PagerSlidingTabStrip>
+            ></com.astuetz.PagerSlidingTabStripExtends>
+
         <android.support.v4.view.ViewPager
-            android:id="@+id/main_vp"
+            android:id="@+id/main_viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"></android.support.v4.view.ViewPager>
-
-
-
     </LinearLayout>
-
-
 </android.support.v4.widget.DrawerLayout>
