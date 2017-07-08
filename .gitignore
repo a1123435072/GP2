@@ -8,3 +8,11 @@
 /captures
 .externalNativeBuild
 .idea
+.gitignore
+.svn/
+AndroidManifest.xml
+build.gradle
+gradle.properties
+project.properties
+res/
+src/
