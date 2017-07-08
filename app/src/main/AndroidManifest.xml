@@ -3,7 +3,7 @@
     package="cn.zzu.googleplay">
 
     <!--android:process=":process1"  运行在单独一个线程执行,,他就会执行多次-->
-    <application
+    <cn.zzu.googleplay.base.MyApplacation
         android:process=":process1"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -18,6 +18,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
+    </cn.zzu.googleplay.base.MyApplacation>
 
 </manifest>
