@@ -5,11 +5,16 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Process;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by yangg on 2017/7/8.
  * <p>
  * 描述:易错点:需要在清单文件里面进行配置****************需要在清单文件中配置
  * static内存共享的东西
+ *
+ * 内存  缓存最好不要用,因为都忘里面扔,,会很大
  */
 
 public class MyApplacation extends Application {
@@ -22,6 +27,8 @@ public class MyApplacation extends Application {
         return context;
     }
 
+
+    private Map<String,String> mMemProtoicolCacheMap = new HashMap<>();
     /**
      * 得到主线城里面查un就爱你的线程id
      *

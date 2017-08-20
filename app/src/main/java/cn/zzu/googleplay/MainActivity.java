@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -45,13 +46,15 @@ public class MainActivity extends AppCompatActivity {
         intiActionBarDrewerToggle();
         initData();
 
+        //mainTabs.sett
     }
+
 
     private void initData() {
         //模拟数据集
         mMainTitle = UIUtils.getStrings(R.array.main_titles);
         //为,viewPager设置适配器
-        MainFragmentPagerAdapter mainFragmentPagerAdapter = new MainFragmentPagerAdapter(getSupportFragmentManager());
+        MainFragmentStatePagerAdapter mainFragmentPagerAdapter = new MainFragmentStatePagerAdapter(getSupportFragmentManager());
 
         mainViewpager.setAdapter(mainFragmentPagerAdapter);
         mainTabs.setViewPager(mainViewpager);
@@ -136,6 +139,36 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public CharSequence getPageTitle(int position) {
 
+            return mMainTitle[position];
+        }
+    }
+
+    class MainFragmentStatePagerAdapter extends FragmentStatePagerAdapter {
+
+        public MainFragmentStatePagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {//指定Position所对应的页面的Fragment内容
+            LogUtils.s("初始化->" + mMainTitle[position]);
+            Fragment fragment = FragmentFactory.createFragment(position);
+            return fragment;
+        }
+
+        @Override
+        public int getCount() {//决定ViewPager页数的总和
+            if (mMainTitle != null) {
+                return mMainTitle.length;
+            }
+            return 0;
+        }
+
+        /**
+         * 必须覆写一个方法:getPageTitle
+         */
+        @Override
+        public CharSequence getPageTitle(int position) {
             return mMainTitle[position];
         }
     }

@@ -13,4 +13,17 @@ public class Constants {
      * LogUtils.LEVEL_OFF  屏蔽所有日志的输出
      */
     public static final int DEBUGLEVEL = LogUtils.LEVEL_ALL;
+    public static final String BASEURL = "http://192.168.1.1/GoogleServer";
+
+    public class URLS {
+        public static final String BASEURL = "";
+    }
+
+    /**
+     * 常量进行分类,,参考R文件
+     */
+//    public static final String BASEURL {
+//
+//    }
+
 }
